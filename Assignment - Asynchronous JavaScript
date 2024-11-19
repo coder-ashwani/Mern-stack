@@ -1,3 +1,6 @@
+Question 1 
+
+
 HTML CODE <br>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,3 +101,84 @@ function startTimer() {
 // Function to pause the countdown
 function pauseTimer() {
     isPaused = true
+
+
+
+
+
+Qustion 2
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Data with Promises</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #data {
+            margin-top: 20px;
+            font-size: 1.2em;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            display: inline-block;
+            max-width: 600px;
+            word-wrap: break-word;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fetch Data from Public API</h1>
+    <button id="fetchData">Fetch Random Dog Image</button>
+    <div id="data">Click the button to fetch data.</div>
+
+    <script src="fetch-data.js"></script>
+</body>
+</html>
+
+
+JAvascript code
+// DOM Elements
+const fetchDataButton = document.getElementById("fetchData");
+const dataContainer = document.getElementById("data");
+
+// Function to fetch data from the Dog API
+function fetchDogImage() {
+    const apiUrl = "https://dog.ceo/api/breeds/image/random";
+
+    // Update the UI to show loading
+    dataContainer.innerHTML = "Loading...";
+
+    // Fetch data from the API
+    fetch(apiUrl)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            // Display the fetched image
+            dataContainer.innerHTML = `
+                <p>Here is a random dog image:</p>
+                <img src="${data.message}" alt="Random Dog" style="max-width: 100%; border-radius: 5px;">
+            `;
+        })
+        .catch((error) => {
+            // Handle and display errors
+            dataContainer.innerHTML = `
+                <p class="error">Failed to fetch data. ${error.message}</p>
+            `;
+        });
+}
+
+// Attach the event listener to the button
+fetchDataButton.addEventListener("click", fetchDogImage);
