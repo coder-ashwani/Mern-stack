@@ -1,0 +1,100 @@
+HTML CODE <br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #timer-display {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+        .controls {
+            margin: 10px 0;
+        }
+        .controls button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .input-fields input {
+            width: 50px;
+            padding: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Countdown Timer</h1>
+    <div class="input-fields">
+        <input type="number" id="minutes" placeholder="MM" min="0">
+        <input type="number" id="seconds" placeholder="SS" min="0" max="59">
+    </div>
+    <div id="timer-display">00:00</div>
+    <div class="controls">
+        <button id="start-btn">Start</button>
+        <button id="pause-btn">Pause</button>
+        <button id="reset-btn">Reset</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+JAVASCRIPT CDOE
+let timerInterval; // Variable to store the interval ID
+let totalSeconds = 0; // Total time in seconds
+let isPaused = false; // Flag to track pause state
+
+// DOM Elements
+const minutesInput = document.getElementById('minutes');
+const secondsInput = document.getElementById('seconds');
+const timerDisplay = document.getElementById('timer-display');
+const startButton = document.getElementById('start-btn');
+const pauseButton = document.getElementById('pause-btn');
+const resetButton = document.getElementById('reset-btn');
+
+// Function to update the timer display
+function updateDisplay(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    timerDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+// Function to start the countdown
+function startTimer() {
+    if (!isPaused) {
+        const minutes = parseInt(minutesInput.value) || 0;
+        const seconds = parseInt(secondsInput.value) || 0;
+        totalSeconds = minutes * 60 + seconds;
+    }
+
+    if (totalSeconds <= 0) {
+        alert("Please enter a valid time.");
+        return;
+    }
+
+    isPaused = false;
+    clearInterval(timerInterval); // Clear any existing intervals
+    timerInterval = setInterval(() => {
+        if (totalSeconds > 0) {
+            totalSeconds--;
+            updateDisplay(totalSeconds);
+        } else {
+            clearInterval(timerInterval);
+            alert("Time's up!");
+        }
+    }, 1000);
+}
+
+// Function to pause the countdown
+function pauseTimer() {
+    isPaused = true
