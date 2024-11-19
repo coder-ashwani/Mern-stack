@@ -29,3 +29,73 @@ document.querySelectorAll('.button').forEach(button => {
     button.addEventListener('mouseout', hideMessage);
     button.addEventListener('dblclick', hideButton);
 });
+
+Question -2
+document.addEventListener("DOMContentLoaded", () => {
+    const nameField = document.getElementById("name");
+    const emailField = document.getElementById("email");
+    const passwordField = document.getElementById("password");
+    const form = document.getElementById("registration-form");
+
+    const nameError = document.getElementById("name-error");
+    const emailError = document.getElementById("email-error");
+    const passwordError = document.getElementById("password-error");
+
+    // Validate Name: Should not be empty
+    function validateName() {
+        if (nameField.value.trim() === "") {
+            nameError.style.display = "block";
+            return false;
+        } else {
+            nameError.style.display = "none";
+            return true;
+        }
+    }
+
+    // Validate Email: Should match a valid email pattern
+    function validateEmail() {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailField.value)) {
+            emailError.style.display = "block";
+            return false;
+        } else {
+            emailError.style.display = "none";
+            return true;
+        }
+    }
+
+    // Validate Password: Should be at least 8 characters long
+    function validatePassword() {
+        if (passwordField.value.length < 8) {
+            passwordError.style.display = "block";
+            return false;
+        } else {
+            passwordError.style.display = "none";
+            return true;
+        }
+    }
+
+    // Attach event listeners to input fields
+    nameField.addEventListener("input", validateName);
+    nameField.addEventListener("blur", validateName);
+
+    emailField.addEventListener("input", validateEmail);
+    emailField.addEventListener("blur", validateEmail);
+
+    passwordField.addEventListener("input", validatePassword);
+    passwordField.addEventListener("blur", validatePassword);
+
+    // Form submission event
+    form.addEventListener("submit", (event) => {
+        const isNameValid = validateName();
+        const isEmailValid = validateEmail();
+        const isPasswordValid = validatePassword();
+
+        // Prevent form submission if any input is invalid
+        if (!isNameValid || !isEmailValid || !isPasswordValid) {
+            event.preventDefault();
+            alert("Please correct the errors in the form before submitting.");
+        }
+    });
+});
+
